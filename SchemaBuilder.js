@@ -1,6 +1,12 @@
-
 /*
  * SchemaBuilder
+ *
+ * Simple javascript library to create floating panels
+ * that can be moved using the mouse.
+ *
+ * You can either make a current object floating panel.
+ * Or create a new DOM element floating panel.
+ *
  * Define within an IIFE so as to keep our scope limited
  * without polluting the global namespace.
  * @returns SchemaBuilder constructor
@@ -13,8 +19,11 @@ var SchemaBuilder = window.SchemaBuilder = (function() {
 	 * @parameter Object options
 	 * 		@required SchemaBuilder builder
 	 * 		@required JSONString options.schema
-	 * 		@optional Object metrics
-	 * 			metrics.x, .y
+	 * 			OR
+	 * 		@required Object options.schema
+	 * 			@optional String elementID
+	 * 			@optional Object metrics x and y positions in pixels
+	 * 				metrics.x, metrics.y
 	 */
 	var Panel = function(options) {
 		// The SchemaBuilder this Panel belongs to
@@ -33,7 +42,7 @@ var SchemaBuilder = window.SchemaBuilder = (function() {
 		}
 		
 		// Default properties
-		this.element = null;
+		this.element = document.getElementById(options.elementID || '') || null;
 		options.metrics = options.metrics || {};
 		this.x = options.metrics.x || 20;
 		this.y = options.metrics.y || 20;
@@ -164,22 +173,33 @@ var SchemaBuilder = window.SchemaBuilder = (function() {
 	 * Initialize panel elements
 	 */
 	Panel.prototype.init = function() {
-		// Create DOM element structure
-		var el = this.element = document.createElement('div');
-		el.style.background = '#e1e1e1';
-		el.style.border = '3px solid #000000';
-		el.style[SchemaBuilder.getCSSRule('border-radius')] = '3px';
+		// Get or create DOM element structure
+		var el = this.element;
+		if (el === null) {
+			// Element does not exist
+			// Create element
+			el = this.element = document.createElement('div');
+			el.style.background = '#e1e1e1';
+			el.style.border = '3px solid #000000';
+			el.style[SchemaBuilder.getCSSRule('border-radius')] = '3px';
+			el.style.minWidth = '100px';
+			el.style.minHeight = '100px';
+		}
+		else {
+			// Element exists, remove from DOM
+			// so that it can be added to documentElement
+			el.parentNode.removeChild(el);
+		}
 		el.style.position = 'absolute';
 		el.style.left = this.x+'px';
 		el.style.top = this.y+'px';
-		el.style.minWidth = '100px';
-		el.style.minHeight = '100px';
+		el.style.cursor = 'move';
 		// Add to DOM
 		this.builder.element.appendChild(el);
 		
 		
 		// Add events
-		// Create closure so that events are called by this
+		// Create closures so that events are called by *this*
 		var closure = this.mouseDownClosure = (function(panel) {
 			return function(event) {
 				panel.mouseDown(event);

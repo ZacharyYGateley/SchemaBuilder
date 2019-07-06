@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>FieldEditor Test</title>
+  <script type="text/javascript" src="SchemaBuilder.js"></script>
+  <script type="text/javascript">
+	  var mySchema;
+	  function myInit() {
+		  var de = document.documentElement;
+		  var bdy = document.getElementsByTagName('body')[0] || document.body || de;
+
+		  // Create schema
+		  var schema = {
+			  schema: {
+				elementID: 'pre-panel',
+				metrics: { x: 400, y:500 }
+			  }
+		  };
+
+		  // Create schema panel
+		  bdy.style.height = (bdy.innerHeight || de.clientHeight)+'px';
+		  mySchema = new SchemaBuilder({
+			element: bdy,
+			schema: schema
+		  });
+	  }
+  </script>
+</head>
+<body onload="myInit()" style="background:rgb(168, 168, 191);color:#ffffff;position;relative;margin:0;">
+	<div style="text-align:center;font-size:150%;font-weight:bold;padding:20px 0 40px;text-decoration:underline;color:#000;">
+		SchemaBuilder
+	</div>
+	<div style="margin:10px;">
+		SchemaBuilder is a simple JavaScript library that creates independent floating panels that can be dragged and dropped with the mouse.
+
+		<br /><br />
+
+		In this example, the element already existed. It was built into the DOM on page load. SchemaBuilder popped it from the DOM and reinserted it as a position absolute element in the top element.
+
+		<br /><br />
+
+		This panel was instantiated with the following code.
+		
+		<br /><br />
+
+		<pre style="background-color:#fff;color:#000;">
+	  var mySchema;
+	  function myInit() {
+		  var de = document.documentElement;
+		  var bdy = document.getElementsByTagName('body')[0] || document.body || de;
+
+		  // Create schema
+		  var schema = {
+			  schema: {
+				elementID: 'pre-panel',
+				metrics: { x: 400, y:500 }
+			  }
+		  };
+
+		  // Create schema panel
+		  bdy.style.height = (bdy.innerHeight || de.clientHeight)+'px';
+		  mySchema = new SchemaBuilder({
+			element: bdy,
+			schema: schema
+		  });
+	  }
+		</pre>
+
+		<div id="pre-panel" 
+		     style="border:3px solid #f00;background:#e1e1e1;
+		     	    min-width:100px;padding:40px;
+			    color:#000;font-size:10pt;">
+			This element already existed
+			<br /><br />
+			Click and hold<br />
+			to drag and drop
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>FieldEditor Test</title>
+  <script type="text/javascript" src="SchemaBuilder.js"></script>
+  <script type="text/javascript">
+	  var mySchema;
+	  function myInit() {
+		  var de = document.documentElement;
+		  var bdy = document.getElementsByTagName('body')[0] || document.body || de;
+
+		  // Create schema
+		  var schema = {
+			  schema: {
+				metrics: { x: 475, y:400 }
+			  }
+		  };
+
+		  // Create schema panel
+		  bdy.style.height = (bdy.innerHeight || de.clientHeight)+'px';
+		  mySchema = new SchemaBuilder({
+			element: bdy,
+			schema: schema
+		  });
+
+		  // Populate new panel
+		  var div = document.createElement('div');
+		  div.style.padding = '40px';
+		  div.style.color = '#000';
+		  div.style.fontSize = '10pt';
+		  div.innerHTML = 'This element was<br/ >automatically created.\
+			  <br /><br />\
+		  	  Click and hold<br />to drag and drop';
+		  mySchema.panels[0].element.appendChild(div);
+	  }
+  </script>
+</head>
+<body onload="myInit()" style="background:rgb(168, 168, 191);color:#ffffff;position;relative;margin:0;">
+	<div style="text-align:center;font-size:150%;font-weight:bold;padding:20px 0 40px;text-decoration:underline;color:#000;">
+		SchemaBuilder
+	</div>
+	<div style="margin:10px;">
+		SchemaBuilder is a simple JavaScript library that creates independent floating panels that can be dragged and dropped with the mouse.
+
+		<br /><br />
+
+		In this example, there is no pre-existing object to make float, so it is created.
+
+		<br /><br />
+
+		This panel was instantiated with the following code.
+		
+		<br /><br />
+
+		<pre style="background-color:#fff;color:#000;padding:10px;">
+	  var mySchema;
+	  function myInit() {
+		  var de = document.documentElement;
+		  var bdy = document.getElementsByTagName('body')[0] || document.body || de;
+
+		  // Create schema
+		  var schema = {
+			  schema: {
+				metrics: { x: 475, y:400 }
+			  }
+		  };
+
+		  // Create schema panel
+		  bdy.style.height = (bdy.innerHeight || de.clientHeight)+'px';
+		  mySchema = new SchemaBuilder({
+			element: bdy,
+			schema: schema
+		  });
+
+		  // Populate new panel
+		  var div = document.createElement('div');
+		  div.style.padding = '40px';
+		  div.style.color = '#000';
+		  div.style.fontSize = '10pt';
+		  div.innerHTML = 'This element was&lt;br /&gt;automatically created.\
+			  &lt;br /&gt;&lt;br /&gt;\
+		  	  Click and hold&lt;br /&gt;to drag and drop';
+		  mySchema.panels[0].element.appendChild(div);
+	  }
+		</pre>
+	</div>
+</body>
+</html>
